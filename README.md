@@ -1,38 +1,97 @@
-## Java Fantasy Lamp Simulation
+# Magic Lamp Simulator
 
-This repository contains code for a fun and imaginative Java simulation of magic lamps and genies.
+A Java implementation of a magical lamp system that simulates the interaction between magical lamps and different types of genies.
 
-**The Classes:**
+## Overview
 
-* **MagicLamp.java:** This class represents a magical lamp with a limited number of genies it can release. It keeps track of released genies, recharges (when a recyclable demon is used), and can compare itself to another lamp.
-* **Genie.java:** This is the base class for all genies. It holds the maximum number of wishes it can grant and the number of wishes already granted. It also provides methods to check if wishes are available and grant wishes (with limitations).
-* **FriendlyGenie.java:** This subclass of Genie represents a friendly genie who grants all the wishes within its limit.
-* **GrumpyGenie.java:** This subclass represents a grumpy genie who only grants one wish.
-* **RecyclableDemon.java:** This subclass represents a special genie that cannot grant wishes but allows the lamp to be recharged (resetting the release count) when recycled.
+This project implements a fantasy-based object-oriented system where users can interact with magic lamps that produce different types of genies. Each genie has unique characteristics and wish-granting capabilities.
 
-**The Main Program (Main.java):**
+## Classes
 
-This program demonstrates the functionalities of the lamp and genie classes. It creates two magic lamps with different maximum genie capacities. It then rubs the lamps multiple times, encountering different genie types based on the lamp's state and the number of rubs. The program also demonstrates genie wish granting and lamp recharging using a recyclable demon. Finally, it compares the two lamps to see if they are in the same state.
+### MagicLamp
+The main container class that manages genie creation and lamp functionality.
+- Can be initialized with a maximum number of genies it can release
+- Produces different types of genies based on certain conditions
+- Keeps track of how many genies have been released
+- Can be recharged by recycling a demon
+- Supports comparison with other lamps
 
-**Running the Simulation:**
+### Genie (Base Class)
+The parent class for all genie types with basic wish-granting functionality.
+- Initialized with a maximum number of wishes it can grant
+- Tracks granted wishes
+- Provides wish-granting verification
 
-1. Clone this repository or download the source code files.
-2. Open a terminal or command prompt and navigate to the project directory.
-3. Compile the Java classes using a command like `javac *.java` (replace with your compiler command if needed).
-4. Run the program with `java Main`.
+### Genie Types
 
-**Expected Output:**
+#### FriendlyGenie
+- Extends the base Genie class
+- Grants multiple wishes as specified during creation
+- Released when the lamp is rubbed an even number of times
 
-The program will simulate rubbing the lamps, encountering different genies, granting wishes (with limitations), and recharging a lamp using a recyclable demon. Finally, it will show a message indicating whether the two lamps are in the same state.
+#### GrumpyGenie
+- Extends the base Genie class
+- Only grants exactly one wish
+- Released when the lamp is rubbed an odd number of times
 
-**Note:**
+#### RecyclableDemon
+- Extends the base Genie class
+- Released when the lamp has exceeded its maximum genie limit
+- Can be recycled to recharge the lamp
+- Cannot grant wishes after being recycled
 
-This code is for entertainment and educational purposes. It demonstrates basic object-oriented concepts and inheritance in Java.
+## Features
 
-**Next Steps:**
+- Dynamic genie creation based on lamp usage
+- Wish-granting system with limits
+- Lamp recharging mechanism
+- Lamp comparison functionality
 
-* You can modify the program to allow setting the maximum wishes for friendly genies.
-* Add functionalities to the genie classes to represent different types of wishes they can grant.
-* Consider implementing a user interface for interacting with the lamps and genies.
+## Usage Example
 
-This repository provides a starting point for exploring object-oriented programming and creating imaginative simulations in Java. Feel free to experiment and extend the code to create your own magical adventures.
+```java
+// Create a magic lamp with maximum 2 genies
+MagicLamp lamp = new MagicLamp(2);
+
+// Rub the lamp to get a genie (first rub - will be a GrumpyGenie)
+Genie genie1 = lamp.rub(5);
+genie1.grantsWishes(); // Can only grant one wish
+
+// Rub again (second rub - will be a FriendlyGenie)
+Genie genie2 = lamp.rub(3);
+genie2.grantsWishes(); // Can grant multiple wishes
+
+// Third rub will produce a RecyclableDemon since max genies is exceeded
+Genie demon = lamp.rub(5);
+
+// Recycle the demon to recharge the lamp
+lamp.recyclesGenie(demon);
+```
+
+## Class Hierarchy
+
+```
+Genie (Base Class)
+├── FriendlyGenie
+├── GrumpyGenie
+└── RecyclableDemon
+```
+
+## Technical Details
+
+- Written in Java
+- Uses inheritance and polymorphism for genie types
+- Implements type checking for recycling mechanism
+- Package: `io.codeforall.fanstatics`
+
+## Design Patterns
+
+- Factory Pattern: Used in the `MagicLamp` class for creating different types of genies
+- Template Pattern: Base `Genie` class defines the structure for specific genie types
+- Strategy Pattern: Different wish-granting behaviours for each genie type
+
+## Limitations
+
+- Once a genie is created, its maximum wishes cannot be modified
+- RecyclableDemon can only be recycled once
+- GrumpyGenie is hard coded to grant exactly one wish
